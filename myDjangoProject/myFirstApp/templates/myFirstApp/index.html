@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <!-- If latest_articles that come from views/context are not empty, then we
+          some operations -->
+    {% if latest_articles %}
+    <ul>
+      <!-- running through all articles that we have in our table/model Article -->
+      {% for article in latest_articles %}
+
+      <!-- Hardcoded url referencing -->
+      <!-- <li><a href="{/article/{{article.id}}/}"> {{article.article_text}}</a></li> -->
+
+      <!-- Accessing the views using its name in the path function (you can delete myFirstApp here)-->
+      <!-- <li><a href="{% url 'myFirstApp:article' article.id %}"> {{article.article_text}}</a></li> -->
+
+      <!-- Finally define the name of the app in the urls.py of app and then access its views by name -->
+      <li><a href="{% url 'myFirstApp:article' article.id %}"> {{article.article_text}}</a></li>
+
+      {% endfor %}
+    </ul>
+    {% else %}
+      <p> "No articles available" </p>
+    {% endif %}
+
+  </body>
+</html>

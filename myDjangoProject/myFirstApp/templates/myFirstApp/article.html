@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <p><h3><a href="{% url 'myFirstApp:index' %}"> Home </a></h3>
+
+    <h2>{{ article.article_name }}</h2>
+    <ul>
+        <li> {{article.article_text}} </li>
+
+    </ul>
+    <!-- {{ article }} -->
+  </body>
+</html>
