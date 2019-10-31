@@ -1,17 +1,32 @@
 {% extends 'main.html' %}
 
 {% block login %}
-    <div class="large-offset-3 large-6 columns">
-        <form action="/auth/login/" method="post">
+    <div class="row">
+        <div class="medium-6 large-5 columns">
+            <form action="/auth/login/" method="post">
             {% csrf_token %}
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password">
+            <div class="row">
+                <div class="small-3 columns">
+                    <label for="username">Username</label>
+                    </div>
+                <div class="small-9 columns">
+                    <input id="middle-label" type="text" name="username" id="username">
+                    </div>
+                <div class="small-3 columns">
+                    <label for="password">Password</label>
+                    </div>
+                <div class="small-9 columns">
+                    <input id="middle-label" type="password" name="password" id="password">
+                </div>
+            </div>
+
             {% if login_error %}
                 <label for="error">{{ login_error }}</label>
             {% endif %}
-            <input type="button" type="submit" value="Login">
-        </form>
+            <input class="button" type="submit" value="Login">
+            <div class="label round secondary"><a href="/auth/signup/">Register</a></div>
+            </form>
+        </div>
     </div>
+
 {% endblock %}

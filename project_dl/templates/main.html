@@ -11,18 +11,30 @@
 </head>
 <body>
 <div class="top-bar">
+      <div class="top-bar-left">
+        <ul class="menu">
+          <li class="menu-text"><a href="/">DL</a></li>
+          <li><a href="#">Subjects</a></li>
+          <li><a href="#">News</a></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
         <ul class="top-bar-right">
             {% if username %}
-                <li><a href="/auth/logout/">Log Out {{ username }}</a></li>
+                <a class="button" href="/auth/logout/">Log Out ({{ username }})</a>
             {% else %}
-                <li><a href="/auth/login/">Log In</a></li>
+                <a class="button" href="/auth/login/">Log In</a>
             {% endif %}
         </ul>
+      </div>
+
 </div>
-    <h1><a href="/">My Blog</a></h1>
-    <div class="grid-x">
-    <div class="small-1 columns"></div> <!— Для отступа слева —>
-        <div class="small-8 columns">{% block article %}{% endblock %}</div></div>
+    <div class="grid-container">
+        <h1><a href="/">DL</a></h1>
+        <div class="grid-x">
+        <div class="small-1 columns"></div> <!— Для отступа слева —>
+            <div class="small-8 columns">{% block article %}{% endblock %}</div></div>
+    </div>
 {% block login %}{% endblock %}
 </body>
 </html>
