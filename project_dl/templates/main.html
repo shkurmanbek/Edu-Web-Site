@@ -1,0 +1,28 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Django</title>
+    <link rel="stylesheet" type="text/css" href="{% static "static/css/style.css" %}">
+</head>
+<body>
+<div class="top-bar">
+        <ul class="top-bar-right">
+            {% if username %}
+                <li><a href="/auth/logout/">Log Out {{ username }}</a></li>
+            {% else %}
+                <li><a href="/auth/login/">Log In</a></li>
+            {% endif %}
+        </ul>
+</div>
+    <h1><a href="/">My Blog</a></h1>
+    <div class="grid-x">
+    <div class="small-1 columns"></div> <!— Для отступа слева —>
+        <div class="small-8 columns">{% block article %}{% endblock %}</div></div>
+{% block login %}{% endblock %}
+</body>
+</html>
