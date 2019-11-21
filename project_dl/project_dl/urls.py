@@ -20,6 +20,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('basicview/', include('article.urls')),
     path('auth/', include('loginsys.urls')),
+    path('user/', include('subjects.urls')),
+    path('mail/', include('mail.urls')),
     path('', include('article.urls')),
 
 ]

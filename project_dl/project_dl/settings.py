@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'article',
     'loginsys',
+    'subjects',
+    'mail',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,7 +59,9 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': ['C:/Users/User/Desktop/Project-DL-/project_dl/templates',
                  'C:/Users/User/Desktop/Project-DL-/project_dl/article/templates',
-                 'C:/Users/User/Desktop/Project-DL-/project_dl/loginsys/templates',],
+                 'C:/Users/User/Desktop/Project-DL-/project_dl/loginsys/templates',
+                 'C:/Users/User/Desktop/Project-DL-/project_dl/subjects/templates',
+                 'C:/Users/User/Desktop/Project-DL-/project_dl/mail/templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,6 +125,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_ROOT = BASE_DIR + r'/media'
+MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = (
     ('static', 'C:/Users/User/Desktop/Project-DL-/project_dl/static'),

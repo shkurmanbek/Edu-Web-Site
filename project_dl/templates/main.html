@@ -10,31 +10,51 @@
     <link rel="stylesheet" type="text/css" href="{% static "static/css/style.css" %}">
 </head>
 <body>
-<div class="top-bar">
-      <div class="top-bar-left">
-        <ul class="menu">
-          <li class="menu-text"><a href="/">DL</a></li>
-          <li><a href="#">Subjects</a></li>
-          <li><a href="#">News</a></li>
-        </ul>
-      </div>
-      <div class="top-bar-right">
-        <ul class="top-bar-right">
-            {% if username %}
-                <a class="button" href="/auth/logout/">Log Out ({{ username }})</a>
-            {% else %}
-                <a class="button" href="/auth/login/">Log In</a>
-            {% endif %}
-        </ul>
-      </div>
+    <div class="top-bar">
+          <div class="top-bar-left">
+            <ul class="menu">
+              <li><a href="/">DL</a></li>
+                {% if username %}
+                    <li><a href="/user/">Subjects</a></li>
+                    <li><a href="/mail/">Mail</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="top-bar">
+            <ul class="menu">
+                <form action="{%url 'search' %}" method="post">
+                          {% csrf_token %}
+                    <li><input type="text" name="search_field" value="" method='POST' placeholder="Search" ></li>
+                    <li><input class="button" type="submit" name="Search" value="Search"></li>
+                </form>
+            </ul>
+        </div>
+        <div class="top-bar-right">
+            <ul class="menu">
+                {% if username %}
+                    <a class="button" href="/auth/logout/">Log Out ({{ username }})</a>
+                {% else %}
+                    <a class="button" href="/auth/login/">Log In</a>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
 
-</div>
+    <div class="callout large primary">
+      <div class="row column text-center">
+        <h1><a href="/">IITU NEWS</a></h1>
+      </div>
+    </div>
+
     <div class="grid-container">
-        <h1><a href="/">DL</a></h1>
         <div class="grid-x">
         <div class="small-1 columns"></div> <!— Для отступа слева —>
             <div class="small-8 columns">{% block article %}{% endblock %}</div></div>
     </div>
+<div class="grid-container">
+{% block uploads %}{% endblock %}
 {% block login %}{% endblock %}
+
+</div>
 </body>
 </html>

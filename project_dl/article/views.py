@@ -1,33 +1,22 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.template.context_processors import csrf
 from django.template.loader import get_template
 from django.template import Context
 from django.shortcuts import render_to_response
 from django.contrib import auth
+from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_protect
 
 from .forms import CommandForm
 from .models import Article, Commands
 # Create your views here.
 
-def basic_one(request):
-    view = 'basic_one'
-    html = '<html><body>THIS IS %s VIEW</html></body>' % view
-    return HttpResponse(html)
-
-def template_two(request):
-    view = 'template_two'
-    t = get_template('myview.html')
-    html = t.render({'name': view})
-    return HttpResponse(html)
-
-def template_three_simple(request):
-    view = 'template_three'
-    return render_to_response('myview.html', {'name' : view})
-
-def articles(request):
-    return render_to_response('articles.html', {'articles': Article.objects.all(),
+def articles(request, page_number=1):
+    all_articles = Article.objects.all()
+    current_page = Paginator(all_articles, 2)
+    return render_to_response('articles.html', {'articles': current_page.page(page_number),
                                                 'username': auth.get_user(request).username})
 
 
@@ -44,20 +33,20 @@ def article(request, article_id=1):
     args['username'] = auth.get_user(request).username
     return render_to_response('article.html', args)
 
-def addlike(request, article_id):
+def addlike(request, article_id, page_number=1):
     try:
         if str(article_id) in request.COOKIES:
-            redirect('/')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         else:
             article = Article.objects.get(id=article_id)
             article.article_likes += 1
             article.save()
             response = redirect('/')
             response.set_cookie(str(article_id), 'test')
-            return response
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
     except ObjectDoesNotExist:
         raise Http404
-    return redirect('/')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 def addcomment(request, article_id):
     if request.POST and ("pause" not in request.session):
@@ -70,3 +59,13 @@ def addcomment(request, article_id):
             request.session['pause'] = True
     return redirect('/articles/get/%s/' % article_id)
 
+def search(request):
+    try:
+        if request.method == "POST":
+            article_text = request.POST.get("search_field")
+            if len(article_text) > 0:
+                search_res = Article.objects.filter(article_text__contains=article_text)
+            return render(request, "articles/search.html",
+                        {"search_res":search_res, "empty_res":"There is no article"})
+    except:
+        return render(request, "article/search.html", {"empty_res":"There is no article"})

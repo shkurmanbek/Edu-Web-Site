@@ -15,4 +15,4 @@ class Commands(models.Model):
         db_table = 'comments'
 
     comment_text = models.TextField()
-    comments_article = models.ForeignKey(Article, 'on_delete')
+    comments_article = models.ForeignKey(Article, on_delete=models.CASCADE)

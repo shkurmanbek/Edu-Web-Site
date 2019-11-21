@@ -1,0 +1,40 @@
+
+{% extends 'user_page.html' %}
+{% load staticfiles %}
+{% block student %}
+    <div class="large-8 columns">
+        {% for student in students %}
+            <h6>Date of the mark: {{ teacher.mark_date }}</h6>
+            <h4><a href="/user/subjects/get/{{ student.id }}">{{ student.student_name }}</a></h4>
+
+            <p>{{ teacher.teacher_name }} {{ teacher.teacher_surname }}</p>
+            <hr>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="large-3 large-offset-5 columns">
+            <nav aria-label="Pagination">
+            <ul class="pagination">
+                {% if students.has_previous %}
+                    <li class="pagination-previous enabled"><a href="/page/{{ students.previous_page_number }}" aria-label="Previous page">Previous <span class="show-for-sr">{{ page }}</span></a></li>
+                {% else %}
+                <li class="pagination-previous disabled">Previous <span class="show-for-sr">page</span></li>
+                {% endif %}
+                {% for page in students.paginator.page_range %}
+                    {% if page == subject.number %}
+                        <li class="current"><span class="show-for-sr">You're on page</span>{{ page }}</li>
+                    {% else %}
+                        <li><a href="/page/{{ page }}">{{ page }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            {% if articles.has_next %}
+                <li class="pagination-next enabled"><a href="/page/{{ students.next_page_number }}" aria-label="Next page">Next <span class="show-for-sr">{{ page }}</span></a></li>
+            {% else %}
+                <li><a href="/page/{{ page }}" aria-label="Page 2">{{ page }}</a></li>
+            {% endif %}
+
+            </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
