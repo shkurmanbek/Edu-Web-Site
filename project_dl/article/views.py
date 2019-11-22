@@ -7,7 +7,7 @@ from django.template import Context
 from django.shortcuts import render_to_response
 from django.contrib import auth
 from django.core.paginator import Paginator
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_exempt
 
 from .forms import CommandForm
 from .models import Article, Commands
@@ -59,13 +59,15 @@ def addcomment(request, article_id):
             request.session['pause'] = True
     return redirect('/articles/get/%s/' % article_id)
 
+
+@csrf_exempt
 def search(request):
     try:
         if request.method == "POST":
             article_text = request.POST.get("search_field")
             if len(article_text) > 0:
                 search_res = Article.objects.filter(article_text__contains=article_text)
-            return render(request, "articles/search.html",
-                        {"search_res":search_res, "empty_res":"There is no article"})
+            return render(request, "/articles/search.html",
+                        {"search_res": search_res, "empty_res": "There is no article"})
     except:
-        return render(request, "article/search.html", {"empty_res":"There is no article"})
+        return render(request, "/articles/search.html", {"empty_res": "There is no article"})

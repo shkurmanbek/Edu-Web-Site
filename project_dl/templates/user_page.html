@@ -20,8 +20,11 @@
         </div>
         <div class="top-bar">
             <ul class="menu">
-                <li><input type="search" placeholder="Search"></li>
-                <li><button type="button" class="button">Search</button></li>
+                <form action="{%url 'search' %}" method="post">
+                          {% csrf_token %}
+                    <li><input type="text" name="search_field" value="" placeholder="Search" ></li>
+                    <li><input class="button" type="submit" name="Search" value="Search"></li>
+                </form>
             </ul>
         </div>
         <div class="top-bar-right">
@@ -31,6 +34,7 @@
                 {% else %}
                     <a class="button" href="/auth/login/">Log In</a>
                 {% endif %}
+
             </ul>
         </div>
     </div>
