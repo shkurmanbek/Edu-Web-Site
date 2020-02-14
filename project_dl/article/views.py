@@ -8,13 +8,20 @@ from django.shortcuts import render_to_response
 from django.contrib import auth
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
 
 from .forms import CommandForm
 from .models import Article, Commands
 # Create your views here.
 
+
 def articles(request, page_number=1):
-    all_articles = Article.objects.all()
+    search_query = request.GET.get("search_field", '')
+    if search_query:
+        all_articles = Article.objects.filter(Q(article_title__icontains=search_query) |
+                                              Q(article_text__icontains=search_query))
+    else:
+        all_articles = Article.objects.all()
     current_page = Paginator(all_articles, 2)
     return render_to_response('articles.html', {'articles': current_page.page(page_number),
                                                 'username': auth.get_user(request).username})
@@ -60,14 +67,14 @@ def addcomment(request, article_id):
     return redirect('/articles/get/%s/' % article_id)
 
 
-@csrf_exempt
-def search(request):
-    try:
-        if request.method == "POST":
-            article_text = request.POST.get("search_field")
-            if len(article_text) > 0:
-                search_res = Article.objects.filter(article_text__contains=article_text)
-            return render(request, "/articles/search.html",
-                        {"search_res": search_res, "empty_res": "There is no article"})
-    except:
-        return render(request, "/articles/search.html", {"empty_res": "There is no article"})
+# @csrf_exempt
+# def search(request):
+#     try:
+#         if request.method == "POST":
+#             article_text = request.POST.get("search_field")
+#             if len(article_text) > 0:
+#                 search_res = Article.objects.filter(article_text__contains=article_text)
+#             return render(request, "articles/search.html",
+#                         {"search_res": search_res, "empty_res": "There is no article"})
+#     except:
+#         return render(request, "articles/search.html", {"empty_res": "There is no article"})

@@ -20,7 +20,7 @@
         </div>
         <div class="top-bar">
             <ul class="menu">
-                <form action="{%url 'search' %}" method="post">
+                <form action="{%url 'articles' %}" method="post">
                           {% csrf_token %}
                     <li><input type="text" name="search_field" value="" placeholder="Search" ></li>
                     <li><input class="button" type="submit" name="Search" value="Search"></li>

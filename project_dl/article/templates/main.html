@@ -1,5 +1,5 @@
-{% load staticfiles %}
-<!doctype html>
+{% load static %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Django</title>
-    <link rel="stylesheet" type="text/css" href="{% static "static/css/style.css" %}">
+    <link rel="stylesheet" href="{% static "css/style.css"%}">
 </head>
 <body>
     <div class="top-bar">
@@ -22,9 +22,9 @@
         </div>
         <div class="top-bar">
             <ul class="menu">
-                <form action="{%url 'search' %}" method="post">
+                <form action="{% url "articles" %}">
                           {% csrf_token %}
-                    <li><input type="text" name="search_field" value="" method='POST' placeholder="Search" ></li>
+                    <li><input type="text" name="search_field" value="" placeholder="Search" ></li>
                     <li><input class="button" type="submit" name="Search" value="Search"></li>
                 </form>
             </ul>

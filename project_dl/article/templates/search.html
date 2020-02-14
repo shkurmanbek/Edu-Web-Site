@@ -1,12 +1,12 @@
 {% extends "main.html"%}
 
 {% block article %}
-  {% if search_res %}
+    {% if search_res %}
   <br>
     {% for article in search_res%}
       <ol>
         <li value="{{forloop.counter}}">
-          <a href="{% url 'articles:article' article.id %}">
+          <a href="{% url 'articles:article'%}">
           <p>{{article.article_title}}</p>
         </a>
         {{ article.article_text|truncatewords:10 }}

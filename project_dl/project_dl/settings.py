@@ -128,6 +128,7 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = BASE_DIR + r'/media'
 MEDIA_URL = '/media/'
 
-STATICFILES_DIRS = (
-    ('static', 'C:/Users/User/Desktop/Project-DL-/project_dl/static'),
-)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+]
